@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<h1>📊 Performance Dashboard</h1>
+
+<div style="display:grid; gap:20px; max-width:700px;">
+
+    <div style="padding:20px; background:rgba(255,255,255,0.1); border-radius:12px;">
+        <h3>Total Blogs Generated</h3>
+        <h2>{{ total_blogs }}</h2>
+    </div>
+
+    <div style="padding:20px; background:rgba(255,255,255,0.1); border-radius:12px;">
+        <h3>Average Generation Time</h3>
+        <h2>{{ avg_generation_time }} sec</h2>
+    </div>
+
+    <div style="padding:20px; background:rgba(255,255,255,0.1); border-radius:12px;">
+        <h3>Average Plagiarism Score</h3>
+        <h2>{{ avg_plagiarism }} %</h2>
+    </div>
+
+    <div style="padding:20px; background:rgba(255,255,255,0.1); border-radius:12px;">
+        <h3>Average Rating</h3>
+        <h2>{{ avg_rating }}/5</h2>
+    </div>
+
+</div>
+
+{% endblock %}

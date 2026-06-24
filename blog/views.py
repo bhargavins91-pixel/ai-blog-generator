@@ -120,3 +120,28 @@ def blog_detail(request, blog_id):
         "blog": blog,
         "avg_rating": round(avg_rating, 1),
     })
+
+@login_required
+def dashboard(request):
+    total_blogs = Blog.objects.count()
+
+    avg_generation_time = Blog.objects.aggregate(
+        Avg("generation_time")
+    )["generation_time__avg"] or 0
+
+    avg_plagiarism = Blog.objects.aggregate(
+        Avg("plagiarism_score")
+    )["plagiarism_score__avg"] or 0
+
+    avg_rating = Rating.objects.aggregate(
+        Avg("stars")
+    )["stars__avg"] or 0
+
+    context = {
+        "total_blogs": total_blogs,
+        "avg_generation_time": round(avg_generation_time, 2),
+        "avg_plagiarism": round(avg_plagiarism, 2),
+        "avg_rating": round(avg_rating, 2),
+    }
+
+    return render(request, "blog/dashboard.html", context)
