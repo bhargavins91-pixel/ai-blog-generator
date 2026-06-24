@@ -1,0 +1,209 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div class="home-wrapper">
+<div class="home-card">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>AI Blog Generator ✨</h1>
+        <p>Agentic AI–powered content generation with transparency</p>
+    </div>
+
+    <!-- Blog Generation Form -->
+    <form method="POST" class="generate-form">
+    {% csrf_token %}
+
+    <input type="text" name="topic" placeholder="Enter a blog topic…" required>
+
+    <select name="language" required style="padding:14px; border-radius:14px;">
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Kannada">Kannada</option>
+        <option value="Telugu">Telugu</option>
+        <option value="Tamil">Tamil</option>
+        <option value="French">French</option>
+        <option value="Spanish">Spanish</option>
+    </select>
+
+    <button type="submit">Generate 🚀</button>
+
+</form>
+
+
+    <!-- Error Message -->
+    {% if error %}
+        <p class="error-msg">{{ error }}</p>
+    {% endif %}
+
+    <!-- Sorting -->
+    <div class="sort-bar">
+        <span>📊 Sort:</span>
+        <a href="?sort=new" class="{% if sort == 'new' %}active{% endif %}">Newest</a>
+        <a href="?sort=old" class="{% if sort == 'old' %}active{% endif %}">Oldest</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Previous Blogs -->
+    <h2>📚 Previous Blogs</h2>
+
+    {% if blogs %}
+    <div class="blog-grid">
+        {% for blog in blogs %}
+        <a href="{% url 'blog_detail' blog.id %}" class="blog-item">
+            <div class="left">
+                <span class="dot"></span>
+                <span class="title">{{ blog.topic|title }}</span>
+            </div>
+            <div class="rating">
+                ⭐ {{ blog.avg_rating|default:0|floatformat:1 }}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="empty-msg">No blogs generated yet.</p>
+    {% endif %}
+
+</div>
+</div>
+
+<!-- Styles -->
+<style>
+.home-wrapper {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-card {
+    max-width: 760px;
+    width: 100%;
+    padding: 45px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 30px 90px rgba(0,0,0,0.35);
+}
+
+.header {
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.header p {
+    opacity: 0.85;
+    margin-top: 6px;
+}
+
+.generate-form {
+    display: flex;
+    gap: 14px;
+    margin: 25px 0;
+}
+
+.generate-form input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    outline: none;
+}
+
+.generate-form button {
+    padding: 14px 26px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#00f2ff,#38ef7d);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.error-msg {
+    color: #ffb4b4;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.sort-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.sort-bar a {
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    background: rgba(255,255,255,0.1);
+    color: inherit;
+}
+
+.sort-bar a.active {
+    background: #00f2ff;
+    color: #0a1a2f;
+    font-weight: bold;
+}
+
+.blog-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.blog-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    background: rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+}
+
+.blog-item:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 0 25px rgba(0,242,255,0.7),
+        0 0 60px rgba(56,239,125,0.5);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    background: #00f2ff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00f2ff;
+}
+
+.rating {
+    font-weight: bold;
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 30px 0;
+}
+
+.empty-msg {
+    opacity: 0.7;
+    text-align: center;
+}
+</style>
+
+{% endblock %}

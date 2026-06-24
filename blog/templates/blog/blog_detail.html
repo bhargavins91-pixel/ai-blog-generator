@@ -1,0 +1,117 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<div class="blog-wrapper">
+
+    <h1 class="blog-title">{{ blog.topic|title }}</h1>
+
+    <div class="blog-meta">
+        Plagiarism: {{ blog.plagiarism_score }}% |
+        Average Rating: {{ avg_rating }}/5
+    </div>
+
+    <div class="blog-content">
+        {{ blog.content|linebreaks }}
+    </div>
+
+    <hr>
+
+    <h3>Add Review</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="comment" placeholder="Write your review..." required></textarea>
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <h3>Rate Blog</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="number" name="stars" min="1" max="5" required>
+        <button type="submit">Rate</button>
+    </form>
+
+    <h3>Reviews</h3>
+    {% for r in blog.reviews.all %}
+        <div class="review-box">
+            <strong>{{ r.user.username }}</strong>
+            <p>{{ r.comment }}</p>
+        </div>
+    {% empty %}
+        <p>No reviews yet.</p>
+    {% endfor %}
+
+    <hr>
+
+    <!-- 🤖 AGENTIC AI TRACE -->
+    <h3 style="color:#38bdf8;">🤖 Agentic AI Trace</h3>
+
+    {% if blog.agent_log %}
+        <pre class="agent-log">
+{{ blog.agent_log }}
+        </pre>
+    {% else %}
+        <p style="opacity:0.7;">No agentic logs available for this blog.</p>
+    {% endif %}
+
+</div>
+
+<style>
+.blog-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.95);
+    color: #1e293b;
+}
+
+body:not(.light) .blog-wrapper {
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+.blog-title {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.blog-meta {
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 30px;
+}
+
+.blog-content {
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+.review-box {
+    background: rgba(0,0,0,0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+body:not(.light) .review-box {
+    background: rgba(255,255,255,0.08);
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+}
+
+.agent-log {
+    background:#020617;
+    padding:15px;
+    border-radius:8px;
+    color:#e5e7eb;
+    white-space: pre-wrap;
+    font-family: Consolas, monospace;
+}
+</style>
+
+{% endblock %}

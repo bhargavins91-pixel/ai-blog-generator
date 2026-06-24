@@ -1,0 +1,64 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Create. Think. Publish.</h1>
+        <p>AI-powered blogs with smart content, reviews, and ratings.</p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'login' %}" class="btn primary">Login</a>
+            <a href="{% url 'signup' %}" class="btn secondary">Get Started</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.hero {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(0,255,255,0.2), transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(0,255,150,0.2), transparent 40%),
+        linear-gradient(135deg, #050b18, #0a1a2f);
+    color: white;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 30px;
+}
+
+.hero-buttons .btn {
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px;
+    display: inline-block;
+}
+
+.primary {
+    background: linear-gradient(135deg, #ff6a88, #ff8c6b);
+    color: white;
+}
+
+.secondary {
+    border: 2px solid white;
+    color: white;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <!-- BACKGROUND EFFECTS -->
+    <div class="bg-effects">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div class="login-card">
+        <h1>Welcome Back 👋</h1>
+        <p class="subtitle">Login to continue creating blogs</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <p class="signup-text">
+            New user?
+            <a href="{% url 'signup' %}">Create an account</a>
+        </p>
+    </div>
+
+</div>
+
+<style>
+/* ===== HERO BACKGROUND ===== */
+.login-page {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0,255,255,0.18), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0,255,150,0.18), transparent 40%),
+        linear-gradient(135deg, #050b18, #0a1a2f);
+}
+
+/* ===== MOVING GRID ===== */
+.login-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridMove 25s linear infinite;
+    z-index: 0;
+}
+
+@keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 300px 300px; }
+}
+
+/* ===== FLOATING DOTS ===== */
+.bg-effects {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: rgba(0,255,255,1);
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(0,255,255,1);
+    animation: floatDots 14s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.dot:nth-child(2) { top: 70%; left: 20%; animation-delay: 3s; }
+.dot:nth-child(3) { top: 40%; left: 80%; animation-delay: 6s; }
+.dot:nth-child(4) { top: 85%; left: 60%; animation-delay: 2s; }
+.dot:nth-child(5) { top: 15%; left: 70%; animation-delay: 5s; }
+.dot:nth-child(6) { top: 55%; left: 50%; animation-delay: 8s; }
+
+@keyframes floatDots {
+    0% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-50px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.4; }
+}
+
+/* ===== LOGIN CARD ===== */
+.login-card {
+    width: 460px;
+    padding: 45px 40px;
+    background: linear-gradient(135deg, #ff6a88, #ff8c6b);
+    border-radius: 22px;
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 2;
+
+    box-shadow:
+        0 0 40px rgba(255,106,136,0.8),
+        0 0 120px rgba(255,140,107,0.9),
+        0 40px 100px rgba(0,0,0,0.7);
+
+    animation: pulseGlow 4s ease-in-out infinite;
+    transition: all 0.4s ease;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 40px rgba(255,106,136,0.8),
+            0 0 120px rgba(255,140,107,0.9),
+            0 40px 100px rgba(0,0,0,0.7);
+    }
+    50% {
+        box-shadow:
+            0 0 70px rgba(255,106,136,1),
+            0 0 160px rgba(255,140,107,1),
+            0 60px 140px rgba(0,0,0,0.8);
+    }
+}
+
+.login-card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* TEXT */
+.login-card h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-size: 15px;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+
+/* INPUTS */
+.login-card input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+/* BUTTON */
+.login-card button {
+    width: 100%;
+    padding: 14px;
+    background: white;
+    color: #ff6a88;
+    border: none;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-card button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+}
+
+/* LINKS */
+.signup-text {
+    margin-top: 22px;
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+}
+</style>
+
+{% endblock %}

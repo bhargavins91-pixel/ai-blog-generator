@@ -1,0 +1,195 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<div class="signup-page">
+
+    <!-- ✨ BACKGROUND EFFECTS -->
+    <div class="bg-effects">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <!-- 🚀 SIGNUP CARD -->
+    <div class="signup-card">
+        <h1>Create Your Account ✨</h1>
+        <p class="subtitle">Join the future of AI-powered blogging</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm" placeholder="Confirm Password" required>
+
+            <button type="submit">Get Started</button>
+        </form>
+
+        <p class="login-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
+    </div>
+
+</div>
+
+<style>
+/* ===== HERO BACKGROUND ===== */
+.signup-page {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 25% 25%, rgba(255,106,136,0.18), transparent 40%),
+        radial-gradient(circle at 75% 75%, rgba(0,255,150,0.18), transparent 40%),
+        linear-gradient(135deg, #050b18, #0a1a2f);
+}
+
+/* ===== MOVING GRID ===== */
+.signup-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 30s linear infinite;
+    z-index: 0;
+}
+
+@keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 300px 300px; }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.bg-effects {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,106,136,0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,106,136,0.9);
+    animation: floatDots 14s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.dot:nth-child(2) { top: 70%; left: 20%; animation-delay: 3s; }
+.dot:nth-child(3) { top: 40%; left: 80%; animation-delay: 6s; }
+.dot:nth-child(4) { top: 85%; left: 60%; animation-delay: 2s; }
+.dot:nth-child(5) { top: 15%; left: 70%; animation-delay: 5s; }
+.dot:nth-child(6) { top: 55%; left: 50%; animation-delay: 8s; }
+
+@keyframes floatDots {
+    0% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-50px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.4; }
+}
+
+/* ===== SIGNUP CARD ===== */
+.signup-card {
+    width: 420px;
+    padding: 40px;
+    background: linear-gradient(135deg, #8e2de2, #ff6a88);
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 2;
+
+    box-shadow:
+        0 0 30px rgba(142,45,226,0.7),
+        0 0 90px rgba(255,106,136,0.6);
+
+    animation: pulseGlow 4s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 30px rgba(142,45,226,0.7),
+            0 0 90px rgba(255,106,136,0.6);
+    }
+    50% {
+        box-shadow:
+            0 0 45px rgba(142,45,226,1),
+            0 0 120px rgba(255,106,136,0.9);
+    }
+}
+
+.signup-card:hover {
+    transform: translateY(-6px) scale(1.03);
+}
+
+/* TEXT */
+.signup-card h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+/* INPUTS */
+.signup-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+/* BUTTON */
+.signup-card button {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #8e2de2;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-card button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+}
+
+/* LINKS */
+.login-text {
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.login-text a {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+}
+</style>
+
+{% endblock %}
